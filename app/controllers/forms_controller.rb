@@ -1,6 +1,7 @@
 class FormsController < ApplicationController
   before_action :set_form, only: [:show, :update, :destroy]
-
+  accepts_nested_attributes_for :skills
+  
   # GET /forms
   # GET /forms.json
   def index
