@@ -1,6 +1,5 @@
 class FormsController < ApplicationController
   before_action :set_form, only: [:show, :update, :destroy]
-  accepts_nested_attributes_for :skills
   
   # GET /forms
   # GET /forms.json
@@ -13,7 +12,7 @@ class FormsController < ApplicationController
   # GET /forms/1
   # GET /forms/1.json
   def show
-    render json: @form
+    render json: @form, include: [ :skills ]
   end
 
   # POST /forms
@@ -22,7 +21,7 @@ class FormsController < ApplicationController
     @form = Form.new(form_params)
 
     if @form.save
-      render json: @form, status: :created, location: @form
+      render json: @form, status: :created, location: @form, include: [ :skills ]
     else
       render json: @form.errors, status: :unprocessable_entity
     end
@@ -54,6 +53,6 @@ class FormsController < ApplicationController
     end
 
     def form_params
-      params.require(:form).permit(:name, :email, :city, :state, :github, :twitter, :bio)
+      params.require(:form).permit(:name, :email, :city, :state, :github, :twitter, :bio, skills_attributes: [ :description ])
     end
 end
