@@ -21,7 +21,7 @@ class FormsController < ApplicationController
     @form = Form.new(form_params)
 
     if @form.save
-      render json: @form, status: :created, location: @form, include: [ :skills ]
+      render json: @form, status: :created, location: @form
     else
       render json: @form.errors, status: :unprocessable_entity
     end
